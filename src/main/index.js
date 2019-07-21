@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron' // eslint-disable-line
+import { app, BrowserWindow, ipcMain} from 'electron' // eslint-disable-line
 
 /**
  * Set `__static` path to static files in production
@@ -43,6 +43,12 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+ipcMain.on('test', (event, arg) => {
+  console.log(arg);
+  event.sender.send('testReply', 'Hello 22');
+});
+
 
 /**
  * Auto Updater
