@@ -55,6 +55,10 @@
       ipcRenderer.on('testReply', (event, data) => {
         this.test = data;
       });
+
+      ipcRenderer.on('checkReply', (event, data) => {
+        this.test = data;
+      });
     },
   };
 </script>
