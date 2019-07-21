@@ -49,7 +49,10 @@
     },
     "win": {
       "icon": "build/icons/icon.ico",
-      "asar": false
+      "asar": true,
+      "extraResources": [
+        "openvpn/**/*"
+      ]
     },
     "linux": {
       "icon": "build/icons"

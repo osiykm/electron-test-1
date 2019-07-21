@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron'; // eslint-disable-line
+import path from 'path';
 
 const { spawn } = require('child_process');
 /**
@@ -6,6 +7,7 @@ const { spawn } = require('child_process');
  * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
  */
 if (process.env.NODE_ENV !== 'development') {
+  // eslint-disable-next-line no-underscore-dangle
   global.__static = require('path')
     .join(__dirname, '/static')
     .replace(/\\/g, '\\\\'); // eslint-disable-line
@@ -48,15 +50,20 @@ app.on('activate', () => {
 });
 
 ipcMain.on('test', (event, arg) => {
+  // console.log(arg);
+  // console.log(path.join(__dirname, '../../../openvpn/openvpn.exe'));
+  // event.sender.send('testReply', path.join(__dirname, '../../openvpn/openvpn.exe'));
   console.log(arg);
-  const command = `${__static}/openvpn/openvpn.exe`;
+  const command = path.join(__dirname, '../../../openvpn/openvpn.exe');
   const VPN = spawn(command);
   event.sender.send('testReply', 'Solo');
   VPN.stdout.on('data', (data) => {
-    event.sender.send(data);
+    const text = data.toString();
+    event.sender.send('testReply', text);
   });
   VPN.stderr.on('data', (data) => {
-    event.sender.send(data);
+    const text = data.toString();
+    event.sender.send('testReply', text);
   });
 });
 
