@@ -50,19 +50,20 @@ app.on('activate', () => {
 });
 
 ipcMain.on('test', (event, arg) => {
-  // console.log(arg);
-  // console.log(path.join(__dirname, '../../../openvpn/openvpn.exe'));
+  console.log(arg);
+  console.log(path.join(`${__dirname}/../../../openvpn/openvpn.exe`));
   // event.sender.send('testReply', path.join(__dirname, '../../openvpn/openvpn.exe'));
   console.log(arg);
-  const command = path.join(__dirname, '../../../openvpn/openvpn.exe');
-  const VPN = spawn(command);
-  event.sender.send('testReply', 'Solo');
+  const command = path.join('../../../openvpn/openvpn.exe');
+  const VPN = spawn(command, ['--config', path.join('../../../openvpn/zaborona.ovpn')]);
   VPN.stdout.on('data', (data) => {
     const text = data.toString();
+    console.log(text);
     event.sender.send('testReply', text);
   });
   VPN.stderr.on('data', (data) => {
     const text = data.toString();
+    console.log(text);
     event.sender.send('testReply', text);
   });
 });

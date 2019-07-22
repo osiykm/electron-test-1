@@ -52,10 +52,19 @@
       "asar": true,
       "extraResources": [
         "openvpn/**/*"
-      ]
+      ],
+      "target": "nsis"
     },
     "linux": {
       "icon": "build/icons"
+    },
+    "nsis": {
+      "include": "win/installer.nsh",
+      "oneClick" : false ,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine" : false,
+      "allowElevation": true,
+      "warningsAsErrors": true
     }
   },
   "dependencies": {
